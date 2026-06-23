@@ -42,6 +42,7 @@ nav {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 1000;
   background: rgba(6,6,6,0.92);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255,255,255,0.05);
   padding: 0 48px;
@@ -70,6 +71,13 @@ nav {
   transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--white); }
+.nav-links a:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.srv-tab:focus-visible {
+  outline: 1px solid var(--red);
+  outline-offset: 2px;
+}
 
 .nav-cta {
   background: var(--red) !important;
@@ -84,6 +92,9 @@ nav {
   display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
 }
 .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; transition: 0.3s; }
+.hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ===== HERO ===== */
 #hero {
@@ -91,8 +102,10 @@ nav {
   background: var(--black);
   position: relative;
   overflow: hidden;
-  display: flex; align-items: center;
-  padding: 120px 80px 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.55fr);
+  align-items: stretch;
+  padding: 96px 20px 0;
 }
 
 .hero-bg {
@@ -120,7 +133,63 @@ nav {
 
 .hero-content {
   position: relative; z-index: 10;
-  max-width: 860px;
+  max-width: 580px;
+  align-self: center;
+  padding: 120px 0 54px 48px;
+}
+.hero-visual {
+  position: relative;
+  min-height: 100%;
+  border-left: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.hero-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(232,50,10,0.12), transparent 24%),
+    linear-gradient(180deg, transparent 0%, transparent 38%, rgba(255,255,255,0.02) 38%, rgba(255,255,255,0.02) 39%, transparent 39%),
+    repeating-linear-gradient(-8deg, transparent 0 72px, rgba(255,255,255,0.022) 72px 74px);
+}
+.hero-media-grid {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1.1fr 0.95fr;
+  grid-template-rows: 1.25fr 0.75fr;
+  gap: 0;
+}
+.hero-media-cell {
+  position: relative;
+  border-left: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.82);
+  font-family: var(--font-condensed);
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-transform: none;
+  min-height: 260px;
+}
+.hero-media-cell:nth-child(1) {
+  border-left: none;
+  border-top: none;
+  clip-path: polygon(0 0, 100% 0, 78% 100%, 20% 100%);
+}
+.hero-media-cell:nth-child(2) {
+  border-top: none;
+  background: radial-gradient(circle at 70% 22%, rgba(232,50,10,0.14), transparent 52%);
+}
+.hero-media-cell:nth-child(3) {
+  border-left: none;
+  grid-column: 1 / 2;
+  clip-path: polygon(18% 0, 100% 0, 82% 100%, 0 100%);
+}
+.hero-media-cell:nth-child(4) {
+  background: radial-gradient(circle at 64% 30%, rgba(232,50,10,0.14), transparent 48%);
 }
 
 .hero-eyebrow {
@@ -237,14 +306,268 @@ section {
   max-width: 560px; line-height: 1.8; margin-bottom: 60px;
 }
 
+/* ===== MEDIA HUB ===== */
+#media-upload, #social-preview {
+  background: var(--black);
+}
+#social-preview { background: var(--dark); }
+.media-upload-layout {
+  max-width: 980px;
+}
+.upload-panel, .social-card {
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.upload-dropzone {
+  min-height: 270px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  background:
+    linear-gradient(135deg, rgba(232,50,10,0.10), transparent 34%),
+    var(--dark3);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; gap: 16px; padding: 38px;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+.upload-dropzone.is-dragover {
+  border-color: var(--red);
+  background:
+    linear-gradient(135deg, rgba(232,50,10,0.18), transparent 42%),
+    var(--dark3);
+  transform: translateY(-2px);
+}
+.upload-icon {
+  width: 58px; height: 58px; border: 1px solid rgba(232,50,10,0.45);
+  display: grid; place-items: center; color: var(--red);
+  font-family: var(--font-display); font-size: 38px; line-height: 1;
+}
+.upload-title {
+  font-family: var(--font-condensed);
+  font-weight: 700; font-size: 22px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--white);
+}
+.upload-copy {
+  max-width: 440px; color: var(--grey1); font-size: 14px; font-weight: 300;
+}
+.upload-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.upload-actions input { display: none; }
+.upload-meta {
+  font-family: var(--font-condensed);
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #666;
+}
+.media-preview-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px; padding: 14px; min-height: 184px;
+}
+.product-preview-scroll {
+  margin-top: 32px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  width: 100%;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.product-preview-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.product-preview-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
+}
+.product-preview-grid {
+  display: inline-flex;
+  gap: 18px;
+}
+.product-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 12px;
+  min-width: 260px;
+  width: 260px;
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232,50,10,0.3);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.14);
+}
+.product-image-slot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+}
+.product-image-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-details-slot {
+  font-size: 14px;
+  color: var(--grey1);
+  line-height: 1.7;
+  min-height: 70px;
+}
+@media (max-width: 1100px) {
+  .product-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .product-preview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.media-empty {
+  grid-column: 1 / -1;
+  display: grid; place-items: center;
+  min-height: 154px; border: 1px solid rgba(255,255,255,0.06);
+  color: #555; font-family: var(--font-condensed); font-size: 12px;
+  letter-spacing: 3px; text-transform: uppercase; background: rgba(255,255,255,0.02);
+}
+.media-thumb {
+  position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+  background: var(--dark3); border: 1px solid rgba(255,255,255,0.08);
+}
+.media-thumb img, .media-thumb video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.media-type {
+  position: absolute; left: 8px; top: 8px;
+  font-family: var(--font-condensed); font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--white);
+  background: rgba(6,6,6,0.72); border: 1px solid rgba(255,255,255,0.12);
+  padding: 3px 8px;
+}
+.social-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: center;
+  max-width: fit-content;
+  max-height: fit-content;
+  
+}
+.social-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: fit-content;
+  padding: 24px;
+  border-radius: 20px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.social-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(232,50,10,0.3);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.16);
+}
+.social-card-head {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.social-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), #272727 72%);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.social-name {
+  font-family: var(--font-condensed); font-weight: 700; font-size: 15px;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--white);
+}
+.social-platform {
+  font-size: 12px; color: var(--grey1); margin-top: 2px;
+}
+.social-visual {
+  margin-top: 16px;
+  min-height: 340px;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(232,50,10,0.16), transparent 45%),
+    repeating-linear-gradient(-12deg, transparent, transparent 18px, rgba(255,255,255,0.025) 18px, rgba(255,255,255,0.025) 20px),
+    var(--dark3);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: grid; place-items: center;
+}
+.social-visual iframe,
+.social-visual blockquote,
+.social-visual span,
+.social-visual div {
+  width: 100%;
+  max-width: 100%;
+}
+.social-visual iframe {
+  min-height: 320px;
+  border: none;
+}
+.social-visual blockquote {
+  margin: 0;
+  width: 100% !important;
+}
+.social-visual span {
+  font-family: var(--font-condensed); font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase; color: #999;
+}
+.social-actions {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px;
+  margin-top: 2px; padding-top: 2px; border-top: 1px solid rgba(255,255,255,0.06);
+}
+.social-action {
+  font-family: var(--font-condensed); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; color: #777;
+}
+.social-link {
+  display: inline-block;
+  margin-top: 2px;
+  color: var(--red);
+  text-decoration: none;
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  max-width: 100%;
+  word-break: break-word;
+}
+.social-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1100px) {
+  .social-preview-grid {
+    grid-template-columns: 1fr;
+  }
+  .social-visual {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 700px) {
+  section {
+    padding: 80px 24px;
+  }
+  .section-desc {
+    margin-bottom: 40px;
+  }
+  .social-card {
+    padding: 20px;
+  }
+  .social-visual {
+    min-height: 260px;
+  }
+}
+
 /* ===== ABOUT ===== */
 #about {
   background: var(--dark);
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
-
-.about-left {}
-.about-right {}
 
 .about-glance {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
@@ -529,7 +852,6 @@ footer {
 .footer-grid {
   display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 50px;
 }
-.footer-about {}
 .footer-logo img {
   height: 40px; filter: brightness(0) invert(1); margin-bottom: 20px;
 }
@@ -574,11 +896,28 @@ footer {
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
   nav { padding: 0 24px; }
-  .nav-links { display: none; }
+  .nav-links {
+    display: none;
+  }
+  .nav-links.is-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 68px;
+    left: 0; right: 0;
+    background: rgba(6,6,6,0.98);
+    padding: 20px 24px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
   .hamburger { display: flex; }
   section { padding: 70px 24px; }
-  #hero { padding: 110px 24px 70px; }
+  #hero { grid-template-columns: 1fr; padding: 76px 8px 0; }
+  .hero-content { padding: 46px 18px 28px; max-width: none; }
+  .hero-visual { min-height: 520px; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
+  .hero-media-grid { min-height: 520px; }
   .hero-stats { gap: 30px; flex-wrap: wrap; }
+  .hero-media-cell { min-height: 160px; font-size: 16px; }
   #about { grid-template-columns: 1fr; gap: 40px; }
   .vehicles-grid { grid-template-columns: 1fr; }
   .services-layout { grid-template-columns: 1fr; }
@@ -663,6 +1002,37 @@ footer {
       <a href="#contact" class="btn-secondary">Get In Touch</a>
     </div>
   </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-media-grid">
+      <div class="hero-media-cell">Image 1</div>
+      <div class="hero-media-cell">Image 2</div>
+      <div class="hero-media-cell">Image 3</div>
+      <div class="hero-media-cell">Image 4</div>
+    </div>
+    <div class="hero-kicker">
+      <div class="hero-kicker-inner">
+        <span>Engineering Consulting</span>
+        <span>Prototype Manufacturing</span>
+        <span>Go Karts</span>
+        <span>Formula Vehicles</span>
+        <span>ATV & Quad Bikes</span>
+        <span>Electric Mobility</span>
+        <span>Solar Karts</span>
+        <span>Hybrid Vehicles</span>
+        <span>Special Purpose Vehicles</span>
+        <span>Engineering Consulting</span>
+        <span>Prototype Manufacturing</span>
+        <span>Go Karts</span>
+        <span>Formula Vehicles</span>
+        <span>ATV & Quad Bikes</span>
+        <span>Electric Mobility</span>
+        <span>Solar Karts</span>
+        <span>Hybrid Vehicles</span>
+        <span>Special Purpose Vehicles</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- TICKER -->
@@ -688,7 +1058,72 @@ footer {
     <span class="ticker-item">Prototype Manufacturing <span class="ticker-sep">·</span></span>
   </div>
 </div>
+<!-- MEDIA UPLOAD -->
+<section id="media-upload">
+  <div class="section-eyebrow fade-up">Media Studio</div>
+  <h2 class="section-title fade-up">Product <span class="accent">PREVIEW</span></h2>
+  <p class="section-desc fade-up">India's most trusted Student Motorsports company.</p>
+  <div class="product-preview-scroll">
+    <div class="product-preview-grid">
+      <article class="product-card">
+        <div class="product-image-slot"><img src="./Arc logo.jpeg" alt="Product Image 1"></div>
+        <div class="product-details-slot">Product Details &amp; Cost:</div>
+      </article>
 
+      <article class="product-card">
+        <div class="product-image-slot"><img src="./Arc logo.jpeg" alt="Product Image 2"></div>
+        <div class="product-details-slot">Product Details &amp; Cost:</div>
+      </article>
+
+      <article class="product-card">
+        <div class="product-image-slot"><img src="./Arc logo.jpeg" alt="Product Image 3"></div>
+        <div class="product-details-slot">Product Details &amp; Cost:</div>
+      </article>
+
+      <article class="product-card">
+        <div class="product-image-slot"><img src="./Arc logo.jpeg" alt="Product Image 4"></div>
+        <div class="product-details-slot">Product Details &amp; Cost:</div>
+      </article>
+      
+      <article class="product-card">
+        <div class="product-image-slot"><img src="./Arc logo.jpeg" alt="Product Image 5"></div>
+        <div class="product-details-slot">Product Details &amp; Cost:</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- SOCIAL PREVIEWS -->
+<section id="social-preview">
+  <div class="section-eyebrow fade-up">Social Channels</div>
+  <h2 class="section-title fade-up">POST <span class="accent">PREVIEWS</span></h2>
+  <p class="section-desc fade-up">Preview premium LinkedIn and Instagram post layouts with profile, caption, engagement, and media placeholders.</p>
+
+  <div class="social-preview-grid">
+    <article class="social-card fade-up" id="linkedin-card">
+      <div class="social-card-head">
+        <div class="social-avatar"></div>
+        <div>
+          <div class="social-name">LinkedIn</div>
+          <div class="social-platform">LinkedIn post preview</div>
+        </div>
+      </div><span id="linkedin-visual"><iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7467646939845652482?collapsed=1" height="610" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe></span>
+    </article>
+
+    <article class="social-card fade-up" id="instagram-card">
+      <div class="social-card-head">
+        <div class="social-avatar"></div>
+        <div>
+          <div class="social-name">Instagram</div>
+          <div class="social-platform">Instagram post preview</div>
+        </div>
+      </div>
+      <span id="instagram-visual"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DZ2PY9NT0Za/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/DZ2PY9NT0Za/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/DZ2PY9NT0Za/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Anjani ✍️🏻 (@hriday.raga02)</a></p></div></blockquote>
+<script async src="//www.instagram.com/embed.js"></script></span>
+    </article>
+  </div>
+</section>
 <!-- ABOUT -->
 <section id="about">
   <div class="about-left fade-up">
@@ -1116,7 +1551,7 @@ footer {
       </div>
       <div class="contact-item-block">
         <div class="ci-label">Instagram</div>
-        <div class="ci-val"><a href="https://instagram.com/_arcglobal" target="_blank">@_arcglobal</a></div>
+        <div class="ci-val"><a href="https://instagram.com/_arcglobal" target="_blank" rel="noopener noreferrer">@_arcglobal</a></div>
       </div>
       <div class="contact-item-block">
         <div class="ci-label">Working Hours</div>
@@ -1206,14 +1641,16 @@ window.addEventListener('scroll', () => {
 // Hamburger menu
 function toggleMenu() {
   const links = document.querySelector('.nav-links');
-  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-  links.style.flexDirection = 'column';
-  links.style.position = 'absolute';
-  links.style.top = '68px';
-  links.style.left = '0'; links.style.right = '0';
-  links.style.background = 'rgba(6,6,6,0.98)';
-  links.style.padding = '20px 24px';
-  links.style.gap = '16px';
+  const button = document.querySelector('.hamburger');
+  const isOpen = links.classList.toggle('is-open');
+  button.classList.toggle('is-open', isOpen);
+}
+
+function closeMenu() {
+  const links = document.querySelector('.nav-links');
+  const button = document.querySelector('.hamburger');
+  links.classList.remove('is-open');
+  button.classList.remove('is-open');
 }
 
 // Service tabs
@@ -1223,6 +1660,14 @@ function showService(btn, id) {
   btn.classList.add('active');
   document.getElementById('srv-' + id).classList.add('active');
 }
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', closeMenu);
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) closeMenu();
+});
 
 // Scroll animations
 const observer = new IntersectionObserver((entries) => {
@@ -1235,6 +1680,102 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+function parseSocialUrl(value) {
+  try {
+    const url = new URL(value.trim());
+    return {
+      host: url.hostname.replace('www.', ''),
+      path: url.pathname.replace(/\/$/, ''),
+      full: url.href
+    };
+  } catch (err) {
+    return null;
+  }
+}
+
+const embedAttributes = {
+  linkedin: {
+    width: '100%',
+    height: 610,
+    title: 'LinkedIn embedded post'
+  }
+};
+
+const defaultSocialUrls = {
+  linkedin: {
+    post: 'https://www.linkedin.com/posts/prakhar-dixit21102006_suprasaeindia-formulastudent-motorsportengineering-ugcPost-7465709898044022784-R9XE/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAE8kEDUBWiFcI1D4UrxqeojuueCeliU79IQ',
+    embed: 'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7467646939845652482?collapsed=1'
+  },
+  instagram: {
+    post: 'https://www.instagram.com/p/DZ2PY9NT0Za/?utm_source=ig_embed&utm_campaign=loading',
+    embedHtml: `<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DZ2PY9NT0Za/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"><a href="https://www.instagram.com/p/DZ2PY9NT0Za/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"><div style=" display: flex; flex-direction: row; align-items: center;"><div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div><div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"><div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div><div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div><div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"><div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/DZ2PY9NT0Za/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Anjani ✍️🏻 (@hriday.raga02)</a></p></div></blockquote>
+`
+  }
+};
+
+function loadInstagramEmbed() {
+  if (window.instgrm && window.instgrm.Embeds) {
+    window.instgrm.Embeds.process();
+    return;
+  }
+  if (!document.getElementById('instgrm-script')) {
+    const script = document.createElement('script');
+    script.id = 'instgrm-script';
+    script.async = true;
+    script.src = 'https://www.instagram.com/embed.js';
+    script.onload = () => {
+      if (window.instgrm && window.instgrm.Embeds) {
+        window.instgrm.Embeds.process();
+      }
+    };
+    document.body.appendChild(script);
+  }
+}
+
+function updateSocialCard(platform) {
+  const urls = defaultSocialUrls[platform];
+  const parsed = parseSocialUrl(urls.post);
+  const card = document.getElementById(platform + '-card');
+  const link = document.getElementById(platform + '-link');
+  const visual = document.getElementById(platform + '-visual');
+  const text1 = document.getElementById(platform + '-text-1');
+  const text2 = document.getElementById(platform + '-text-2');
+  const text3 = document.getElementById(platform + '-text-3');
+
+  if (!parsed) {
+    visual.textContent = 'Add a valid ' + (platform === 'linkedin' ? 'LinkedIn' : 'Instagram') + ' URL in the code.';
+    link.href = '#';
+    if (text1) text1.style.background = 'rgba(255,255,255,0.06)';
+    if (text2) text2.style.background = 'rgba(255,255,255,0.06)';
+    if (text3) text3.style.background = 'rgba(255,255,255,0.06)';
+    return;
+  }
+
+  card.querySelector('.social-name').textContent = platform === 'linkedin' ? 'LinkedIn' : 'Instagram';
+  link.href = urls.post;
+  link.textContent = 'Open ' + (platform === 'linkedin' ? 'LinkedIn' : 'Instagram') + ' post';
+
+  if (platform === 'instagram') {
+    visual.innerHTML = urls.embedHtml;
+    loadInstagramEmbed();
+  } else {
+    const attrs = embedAttributes[platform];
+    visual.innerHTML = `<iframe src="${urls.embed}" width="${attrs.width}" height="${attrs.height}" frameborder="0" allowfullscreen title="${attrs.title}" loading="lazy"></iframe>`;
+  }
+
+  if (text1) text1.style.background = '#333';
+  if (text2) text2.style.background = '#333';
+  if (text3) text3.style.background = '#333';
+}
+
+function updateSocialPreviews() {
+  updateSocialCard('linkedin');
+  updateSocialCard('instagram');
+}
+
+updateSocialPreviews();
+
 </script>
 </body>
 </html>
