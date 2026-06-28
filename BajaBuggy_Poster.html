@@ -3,621 +3,434 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baja Buggy Internship — Achilles Racing Club India</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Baja Buggy Design & Fabrication Internship | ARC Global</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --red: #CC0000;
-    --bright-red: #E8000A;
-    --dark: #090909;
-    --card: #141414;
-    --card2: #1C1C1C;
-    --white: #FFFFFF;
-    --gray: #AAAAAA;
-    --mid: #666666;
-    --border: #2A2A2A;
-  }
+@font-face { font-family: 'ArchivoBlack'; src: url('fonts/ArchivoBlack-Regular.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Oswald'; src: url('fonts/Oswald-Bold.ttf') format('truetype'); font-weight: 100 700; }
+@font-face { font-family: 'Inter'; src: url('fonts/Inter-Variable.ttf') format('truetype'); font-weight: 100 900; }
+@font-face { font-family: 'JetBrainsMono'; src: url('fonts/JetBrainsMono-Bold.ttf') format('truetype'); font-weight: 100 800; }
 
-  body {
-    background: var(--dark);
-    color: var(--white);
-    font-family: 'Barlow', sans-serif;
-    min-height: 100vh;
-  }
+:root{
+  --ink: #0B0B0D;
+  --panel: #17181C;
+  --panel-2: #1F2024;
+  --paper: #F4F2EC;
+  --paper-dim: #C7C4BA;
+  --red: #FF3B1F;
+  --red-deep: #C8240F;
+  --olive: #9CA38B;
+  --line: #34353B;
+  --mono: 'JetBrainsMono', monospace;
+}
 
-  /* ── POSTER CONTAINER ── */
-  .poster {
-    width: 794px;
-    min-height: 1123px;
-    margin: 0 auto;
-    background: var(--dark);
-    position: relative;
-    overflow: hidden;
-  }
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
 
-  /* ── BACKGROUND ELEMENTS ── */
-  .bg-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(204,0,0,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(204,0,0,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-  }
+body{
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 96px; /* space for sticky CTA */
+}
 
-  .bg-diagonal {
-    position: absolute;
-    top: 0; right: 0;
-    width: 400px; height: 400px;
-    background: linear-gradient(135deg, rgba(204,0,0,0.12) 0%, transparent 60%);
-    pointer-events: none;
-  }
+a{ text-decoration:none; color:inherit; }
 
-  .bg-slash {
-    position: absolute;
-    bottom: 80px; left: -60px;
-    width: 300px; height: 700px;
-    background: linear-gradient(135deg, rgba(204,0,0,0.06) 0%, transparent 70%);
-    transform: skewX(-15deg);
-    pointer-events: none;
-  }
+.bg-grid{
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(244,242,236,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,242,236,0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+  z-index:0; pointer-events:none;
+}
 
-  /* ── RED ACCENT BAR ── */
-  .accent-bar {
-    position: absolute;
-    left: 0; top: 0;
-    width: 6px; height: 100%;
-    background: var(--red);
-  }
+.wrap{ max-width: 920px; margin: 0 auto; position:relative; z-index:1; padding: 0 28px; }
 
-  /* ── HEADER ── */
-  .header {
-    padding: 36px 40px 0 52px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: relative;
-    z-index: 2;
-  }
+/* ===== topbar ===== */
+.topbar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 28px 0 0 0;
+}
+.topbar .eyebrow{
+  font-family:'Oswald'; font-weight:600; font-size: 13px;
+  letter-spacing: 0.28em; text-transform:uppercase; color: var(--olive);
+}
+.topbar .reg-tag{
+  font-family: var(--mono); font-size: 12px; letter-spacing:0.06em;
+  color: var(--paper-dim); border: 1px solid var(--line); padding: 6px 12px;
+  white-space:nowrap;
+}
+.reg-tag b{ color: var(--red); }
 
-  .logo-area {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-  }
+/* ===== hero ===== */
+.hero{ position:relative; padding-top: 18px; }
 
-  .logo-img {
-    width: 120px;
-    filter: brightness(1.4) contrast(1.1);
-  }
+.stripe-wrap{ position:absolute; top: 30px; left:-28px; right:-28px; height: 230px; z-index:0; overflow:hidden; }
+.stripe{
+  position:absolute; top: 0; left: -10%; width: 130%; height: 120px;
+  background: var(--red); transform: skewY(-3.2deg);
+  box-shadow: 0 14px 44px rgba(255,59,31,0.3);
+}
+.stripe-check{
+  position:absolute; left:0; right:0; bottom:-10px; height:10px;
+  background-image: repeating-linear-gradient(45deg, var(--ink) 0 10px, transparent 10px 20px);
+}
 
-  .org-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--mid);
-    text-transform: uppercase;
-  }
+.kicker-row{ position:relative; z-index:2; display:flex; align-items:baseline; gap:12px; padding-top: 30px; flex-wrap:wrap; }
+.kicker-row .powered{ font-family:'Oswald'; font-weight:700; font-size:15px; letter-spacing:0.08em; color: var(--paper); }
+.kicker-row .by{ font-family:'Inter'; font-weight:500; font-size:12.5px; color: var(--ink); background: var(--paper); padding: 3px 9px; }
 
-  /* ── HERO SECTION ── */
-  .hero {
-    padding: 28px 40px 0 52px;
-    position: relative;
-    z-index: 2;
-  }
+.titleblock{ position:relative; z-index:2; margin-top: 8px; }
+.titleblock h1{
+  font-family:'ArchivoBlack'; font-size: 11vw; line-height: 1.02;
+  color: var(--paper); text-transform: uppercase; letter-spacing: -0.005em;
+}
+@media (min-width: 600px){ .titleblock h1{ font-size: 72px; } }
+.titleblock h1 .hl{ color: var(--ink); background: var(--paper); padding: 0px 10px 4px 10px; display:inline-block; }
+.titleblock .sub{
+  margin-top: 18px; font-family:'Oswald'; font-weight:500; font-size: 16px;
+  letter-spacing:0.02em; color: var(--paper-dim); max-width: 620px; line-height:1.5;
+}
+@media (min-width: 600px){ .titleblock .sub{ font-size: 18px; } }
 
-  .badge {
-    display: inline-block;
-    background: var(--red);
-    color: var(--white);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    margin-bottom: 16px;
-  }
+/* ===== stat chips ===== */
+.statrow{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns: repeat(2,1fr); gap: 12px;
+  margin-top: 28px;
+}
+@media (min-width: 600px){ .statrow{ grid-template-columns: repeat(4,1fr); } }
+.stat{
+  background: var(--panel); border:1px solid var(--line); border-top:3px solid var(--red);
+  padding: 16px 14px;
+}
+.stat .n{ font-family:'ArchivoBlack'; font-size: 30px; color: var(--paper); }
+.stat .l{ font-family:'Oswald'; font-weight:600; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--olive); margin-top:4px; }
 
-  .main-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 96px;
-    line-height: 0.88;
-    letter-spacing: 2px;
-    color: var(--white);
-    margin-bottom: 4px;
-  }
+/* ===== CTA button (inline, in-flow) ===== */
+.cta-inline{
+  position:relative; z-index:2; margin-top: 30px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:12px;
+  background: var(--red); color: var(--paper);
+  font-family:'Oswald'; font-weight:700; font-size:17px; letter-spacing:0.04em; text-transform:uppercase;
+  padding: 17px 28px; border: none; cursor:pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn:hover{ background: var(--red-deep); }
+.btn:active{ transform: scale(0.98); }
+.btn .arrow{ font-family:'Inter'; font-weight:800; font-size:19px; }
+.cta-note{
+  margin-top:12px; font-family: var(--mono); font-size:13px; color: var(--paper-dim); letter-spacing:0.02em;
+}
 
-  .main-title span {
-    color: var(--red);
-  }
+/* ===== section label ===== */
+.seclabel{
+  display:flex; align-items:center; gap:14px;
+  margin: 64px 0 22px 0;
+}
+.seclabel .num{ font-family: var(--mono); font-size:15px; color: var(--red); font-weight:700; }
+.seclabel .txt{ font-family:'Oswald'; font-weight:700; font-size:21px; letter-spacing:0.08em; text-transform:uppercase; color: var(--paper); }
+.seclabel .rule{ flex:1; height:1px; background: var(--line); }
 
-  .subtitle {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 5px;
-    color: var(--gray);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
+/* ===== overview cards ===== */
+.overview-grid{
+  display:grid; grid-template-columns: 1fr; gap:14px;
+}
+@media (min-width: 600px){ .overview-grid{ grid-template-columns: 1fr 1fr; } }
+.ocard{
+  background: var(--panel); border:1px solid var(--line); padding: 22px 22px;
+}
+.ocard .ic{ font-size: 22px; line-height:1; }
+.ocard h4{ font-family:'Oswald'; font-weight:700; font-size:16.5px; margin-top:10px; color:var(--paper); text-transform:uppercase; letter-spacing:0.01em; }
+.ocard p{ font-family:'Inter'; font-size:14.5px; line-height:1.55; color:var(--paper-dim); margin-top:8px; }
 
-  .divider {
-    width: 80px;
-    height: 3px;
-    background: var(--red);
-    margin-bottom: 22px;
-  }
+/* ===== journey ===== */
+.journey{ display:flex; flex-wrap:wrap; gap: 14px; }
+.jstep{
+  flex: 1 1 150px;
+  background: var(--panel-2); border:1px solid var(--line); border-top:3px solid var(--red);
+  padding: 16px 14px;
+}
+.jstep .jn{ font-family: var(--mono); font-size:12px; color:var(--olive); }
+.jstep h5{ font-family:'Oswald'; font-weight:700; font-size:14px; color:var(--paper); margin-top:6px; text-transform:uppercase; line-height:1.25; }
+.journey-desc{
+  margin-top: 18px; font-family:'Inter'; font-size:14.5px; line-height:1.6; color:var(--paper-dim);
+  background: var(--panel); border:1px solid var(--line); padding:18px 20px;
+}
 
-  .hero-desc {
-    font-size: 13.5px;
-    font-weight: 300;
-    color: var(--gray);
-    line-height: 1.7;
-    max-width: 520px;
-    margin-bottom: 28px;
-  }
+/* ===== modules accordion-style list ===== */
+.modgrid{ display:grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 600px){ .modgrid{ grid-template-columns: 1fr 1fr; } }
+.modcard{
+  background: var(--panel); border:1px solid var(--line); padding: 18px 20px; position:relative;
+}
+.modcard .mnum{ font-family:'ArchivoBlack'; font-size:22px; color: var(--line); position:absolute; top:14px; right:16px; }
+.modcard h5{ font-family:'Oswald'; font-weight:700; font-size:15.5px; color:var(--paper); text-transform:uppercase; max-width:80%; line-height:1.3; }
+.modcard ul{ margin-top:10px; padding-left:18px; }
+.modcard li{ font-family:'Inter'; font-size:13.5px; color:var(--paper-dim); line-height:1.5; margin-bottom:3px; }
 
-  /* ── STATS ROW ── */
-  .stats {
-    display: flex;
-    gap: 0;
-    margin-bottom: 32px;
-    border: 1px solid var(--border);
-    background: var(--card);
-  }
+/* ===== apply checklist ===== */
+.applygrid{ display:grid; grid-template-columns: 1fr; gap:12px; }
+@media (min-width: 600px){ .applygrid{ grid-template-columns: 1fr 1fr; } }
+.applycard{ display:flex; gap:14px; align-items:flex-start; background:var(--panel); border:1px solid var(--line); padding:16px 18px; }
+.applycard .ic{ font-size:20px; flex-shrink:0; }
+.applycard h6{ font-family:'Oswald'; font-weight:700; font-size:14.5px; text-transform:uppercase; color:var(--paper); }
+.applycard p{ font-family:'Inter'; font-size:13.5px; color:var(--paper-dim); margin-top:5px; line-height:1.5; }
 
-  .stat {
-    flex: 1;
-    padding: 16px 20px;
-    border-right: 1px solid var(--border);
-    position: relative;
-  }
+/* ===== terms ===== */
+.termslist{ display:flex; flex-direction:column; gap:10px; }
+.termitem{ display:flex; gap:14px; align-items:flex-start; padding: 14px 0; border-bottom:1px solid var(--line); }
+.termitem:last-child{ border-bottom:none; }
+.termitem .ic{ font-size:17px; flex-shrink:0; }
+.termitem .t{ font-family:'Inter'; font-size:14px; line-height:1.55; color:var(--paper-dim); }
+.termitem .t b{ font-family:'Oswald'; font-weight:700; color:var(--paper); text-transform:uppercase; font-size:13.5px; letter-spacing:0.02em; display:block; margin-bottom:4px; }
 
-  .stat:last-child { border-right: none; }
+/* ===== final CTA block ===== */
+.finalcta{
+  margin-top: 70px; text-align:center;
+  background: linear-gradient(155deg, var(--red) 0%, var(--red-deep) 100%);
+  padding: 52px 28px; position:relative; overflow:hidden;
+}
+.finalcta::before{
+  content:''; position:absolute; inset:0;
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.06) 0 2px, transparent 2px 14px);
+}
+.finalcta h2{
+  position:relative; font-family:'ArchivoBlack'; font-size: 38px; line-height:1.08;
+  text-transform:uppercase; color: var(--paper);
+}
+@media (min-width: 600px){ .finalcta h2{ font-size: 50px; } }
+.finalcta p{
+  position:relative; font-family:'Oswald'; font-weight:500; font-size:16px; color: rgba(255,255,255,0.92);
+  margin-top:14px; max-width:480px; margin-left:auto; margin-right:auto;
+}
+.finalcta .btn-light{
+  position:relative; display:inline-flex; align-items:center; gap:12px; margin-top:28px;
+  background: var(--paper); color: var(--ink);
+  font-family:'Oswald'; font-weight:700; font-size:17px; letter-spacing:0.04em; text-transform:uppercase;
+  padding: 18px 30px; transition: transform 0.1s ease;
+}
+.finalcta .btn-light:active{ transform: scale(0.98); }
 
-  .stat-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 40px;
-    color: var(--red);
-    line-height: 1;
-  }
+/* ===== footer ===== */
+.footer{ margin-top: 56px; background: var(--paper); color: var(--ink); }
+.footer-inner{
+  display:flex; flex-direction:column; gap:18px;
+  padding: 30px 0;
+  max-width: 920px; margin:0 auto; padding-left:28px; padding-right:28px;
+}
+@media (min-width: 700px){ .footer-inner{ flex-direction:row; align-items:center; justify-content:space-between; } }
+.footer .logowrap{ display:flex; align-items:center; gap:16px; }
+.footer .logowrap img{ height: 40px; }
+.footer .logowrap .div{ width:1.5px; height:34px; background:#cfccc2; }
+.footer .logowrap .tagline{ font-family:'Oswald'; font-weight:600; font-size:11.5px; letter-spacing:0.03em; color:#55534c; max-width:190px; line-height:1.3; text-transform:uppercase; }
+.footer .contacts{ display:flex; gap:24px; flex-wrap:wrap; }
+.contact-item{ display:flex; flex-direction:column; }
+.contact-item .l{ font-family:'Oswald'; font-weight:700; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#8a8779; }
+.contact-item .v{ font-family:var(--mono); font-weight:700; font-size:13px; color: var(--ink); margin-top:3px; }
+.contact-item .v.redv{ color: var(--red-deep); }
+.copyright{
+  text-align:center; font-family:var(--mono); font-size:11.5px; color: var(--paper-dim);
+  padding: 18px 0 4px 0; letter-spacing:0.03em;
+}
 
-  .stat-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: var(--mid);
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-
-  /* ── PHASES ── */
-  .phases {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 0 40px 0 52px;
-    margin-bottom: 24px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .phase {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 18px 20px;
-    position: relative;
-  }
-
-  .phase::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--red);
-  }
-
-  .phase-tag {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--red);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .phase-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 12px;
-  }
-
-  .phase-list {
-    list-style: none;
-  }
-
-  .phase-list li {
-    font-size: 11.5px;
-    color: var(--gray);
-    padding: 3px 0;
-    padding-left: 14px;
-    position: relative;
-    font-weight: 300;
-    line-height: 1.4;
-  }
-
-  .phase-list li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--red);
-    font-size: 10px;
-  }
-
-  /* ── MODULES GRID ── */
-  .section-header {
-    padding: 0 40px 12px 52px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .section-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--red);
-    text-transform: uppercase;
-  }
-
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .modules {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    padding: 0 40px 24px 52px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .mod {
-    background: var(--card2);
-    border: 1px solid var(--border);
-    padding: 12px 11px;
-  }
-
-  .mod-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    color: var(--red);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .mod-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--white);
-    line-height: 1.3;
-    text-transform: uppercase;
-  }
-
-  /* ── HIGHLIGHTS ROW ── */
-  .highlights {
-    display: flex;
-    gap: 8px;
-    padding: 0 40px 24px 52px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hl {
-    flex: 1;
-    background: var(--card);
-    border-left: 3px solid var(--red);
-    padding: 12px 14px;
-  }
-
-  .hl-icon {
-    font-size: 18px;
-    margin-bottom: 6px;
-  }
-
-  .hl-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 3px;
-  }
-
-  .hl-text {
-    font-size: 10.5px;
-    color: var(--gray);
-    font-weight: 300;
-    line-height: 1.5;
-  }
-
-  /* ── CTA / FOOTER ── */
-  .cta-strip {
-    margin: 0 40px 0 52px;
-    background: var(--red);
-    padding: 20px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 24px;
-  }
-
-  .cta-left .cta-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: var(--white);
-    line-height: 1;
-    letter-spacing: 1px;
-  }
-
-  .cta-left .cta-sub {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: rgba(255,255,255,0.75);
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-
-  .cta-right {
-    text-align: right;
-  }
-
-  .cta-url {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 1px;
-  }
-
-  .cta-url-label {
-    font-size: 10px;
-    color: rgba(255,255,255,0.6);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 2px;
-  }
-
-  /* ── CONTACT FOOTER ── */
-  .footer {
-    padding: 0 40px 32px 52px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    position: relative;
-    z-index: 2;
-  }
-
-  .contact-block {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--gray);
-    font-weight: 300;
-  }
-
-  .contact-icon {
-    font-size: 13px;
-    width: 16px;
-    text-align: center;
-  }
-
-  .contact-item strong {
-    color: var(--white);
-    font-weight: 500;
-  }
-
-  .copyright {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--mid);
-    text-transform: uppercase;
-  }
+/* ===== sticky bottom CTA ===== */
+.sticky-cta{
+  position: fixed; bottom:0; left:0; right:0; z-index: 50;
+  background: var(--ink); border-top: 1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding: 16px 22px;
+}
+.sticky-cta .info{ display:none; }
+@media (min-width: 600px){ .sticky-cta .info{ display:block; } }
+.sticky-cta .info .l{ font-family:'Oswald'; font-weight:700; font-size:13px; letter-spacing:0.04em; text-transform:uppercase; color:var(--paper); }
+.sticky-cta .info .d{ font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); margin-top:2px; }
+.sticky-cta .btn{ padding: 14px 24px; font-size:15px; flex-shrink:0; width:100%; justify-content:center; }
+@media (min-width: 600px){ .sticky-cta .btn{ width:auto; } }
 
 </style>
 </head>
 <body>
-<div class="poster">
-  <!-- Background effects -->
-  <div class="bg-grid"></div>
-  <div class="bg-diagonal"></div>
-  <div class="bg-slash"></div>
-  <div class="accent-bar"></div>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;color:#CC0000;text-transform:uppercase;font-weight:700;">Achilles Racing Club India</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:#555;text-transform:uppercase;">Presents</div>
-    </div>
-    <div class="logo-area">
-      <a href="./index.html">
-        <img class="logo-img" src="./ARC_LOGO.jpeg" alt="ARC Global Logo">
-      </a>
-      <div class="org-name">ARC Global</div>
-    </div>
+<div class="bg-grid"></div>
+
+<div class="wrap">
+  <a class="btn btn-light" href="./index.html">
+        Back to Home
+  </a>
+  <div class="topbar">
+    <div class="eyebrow">Engineering · Manufacturing · Motorsports</div>
+    <div class="reg-tag">STATUS: <b>OPEN</b></div>
   </div>
 
-  <!-- HERO -->
   <div class="hero">
-    <div class="badge">30-Day Internship cum Training Program &nbsp;|&nbsp; 100% Offline</div>
-    <div class="main-title">BAJA<br><span>BUGGY</span></div>
-    <div class="subtitle">Design &amp; Fabrication</div>
-    <div class="divider"></div>
-    <p class="hero-desc">A 30-day intensive program combining 15 days of <strong style="color:#fff;">Design &amp; Dynamics Training</strong> with 15 days of <strong style="color:#fff;">Fabrication, Validation &amp; Testing</strong>. Build a complete All-Terrain Vehicle prototype from scratch using CAD, CAE, welding, and real workshop tools.</p>
+    <div class="stripe-wrap"><div class="stripe"><div class="stripe-check"></div></div></div>
+    <div class="kicker-row">
+      <div class="powered">Baja Buggy DESIGN &amp; FABRICATION</div>
+      <div class="by">POWERED BY ARC GLOBAL</div>
+    </div>
+    <div class="titleblock">
+      <h1>30-DAY <span class="hl">DESIGN</span><br>+ FABRICATION</h1>
+      <div class="sub">A comprehensive understanding of the principles and techniques involved in designing, analyzing, simulating, and fabricating high-performance Baja Buggies. 100% offline. 100% in-person.</div>
+    </div>
 
-    <!-- Stats -->
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-val">30</div>
-        <div class="stat-label">Days Intensive</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val">15+15</div>
-        <div class="stat-label">Design + Fab</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val">10</div>
-        <div class="stat-label">Modules</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val">100%</div>
-        <div class="stat-label">Hands-on</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val">1</div>
-        <div class="stat-label">ATV Built</div>
-      </div>
+    <div class="statrow">
+      <div class="stat"><div class="n">30</div><div class="l">Days Total</div></div>
+      <div class="stat"><div class="n">15+15</div><div class="l">Design + Build</div></div>
+      <div class="stat"><div class="n">10</div><div class="l">Modules</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Offline</div></div>
+    </div>
+
+    <div class="cta-inline">
+      <a class="btn" href="https://pages.razorpay.com/bajabuggy2026" target="_blank" rel="noopener">
+        Register Now <span class="arrow">→</span>
+      </a>
+      <div class="cta-note">pages.razorpay.com/bajabuggy2026</div>
     </div>
   </div>
 
-  <!-- PHASES -->
-  <div class="phases">
-    <div class="phase">
-      <div class="phase-tag">Phase 1 — Days 1–15</div>
-      <div class="phase-title">Design &amp; Dynamics Training</div>
-      <ul class="phase-list">
-        <li>ATV architecture &amp; safety standards</li>
-        <li>Chassis design, materials &amp; frame construction</li>
-        <li>Suspension systems &amp; dynamics</li>
-        <li>Steering, braking &amp; powertrain</li>
-        <li>CAD modelling &amp; CAE simulation</li>
-        <li>Tires, wheels &amp; electrical systems</li>
-      </ul>
+  <div class="seclabel"><div class="num">01</div><div class="txt">Program Overview</div><div class="rule"></div></div>
+  <div class="overview-grid">
+    <div class="ocard">
+      <div class="ic">🎯</div>
+      <h4>Program Focus</h4>
+      <p>End-to-end Baja Buggy (ATV) development: chassis design, suspension, powertrain, electrical systems, fabrication, and real-world testing.</p>
     </div>
-    <div class="phase">
-      <div class="phase-tag">Phase 2 — Days 16–30</div>
-      <div class="phase-title">Fabrication, Validation &amp; Testing</div>
-      <ul class="phase-list">
-        <li>Welding, machining &amp; component manufacturing</li>
-        <li>Electrical wiring &amp; system integration</li>
-        <li>Full vehicle assembly &amp; subsystem integration</li>
-        <li>Physical testing &amp; performance validation</li>
-        <li>Off-road terrain simulation &amp; analysis</li>
-        <li>Customization &amp; final prototype review</li>
-      </ul>
+    <div class="ocard">
+      <div class="ic">🔩</div>
+      <h4>Hands-On Learning</h4>
+      <p>15 days of Design & Dynamics training + 15 days of Fabrication, Validation & Testing. Real workshop, real tools, real builds.</p>
+    </div>
+    <div class="ocard">
+      <div class="ic">🏁</div>
+      <h4>What You'll Build</h4>
+      <p>A fully functional All-Terrain Vehicle prototype — designed, analyzed, fabricated, and validated by participants under expert guidance.</p>
+    </div>
+    <div class="ocard">
+      <div class="ic">📐</div>
+      <h4>Tools Covered</h4>
+      <p>CAD (Computer-Aided Design), CAE (Computer-Aided Engineering), mathematical modeling, welding, machining, and dynamic simulation.</p>
     </div>
   </div>
 
-  <!-- MODULES -->
-  <div class="section-header">
-    <div class="section-label">Learning Modules</div>
-    <div class="section-line"></div>
+  <div class="seclabel"><div class="num">02</div><div class="txt">The Journey</div><div class="rule"></div></div>
+  <div class="journey">
+    <div class="jstep"><div class="jn">PHASE 1</div><h5>Design &amp; Simulation</h5></div>
+    <div class="jstep"><div class="jn">DAYS 1–15</div><h5>Classroom + Practical Exercises</h5></div>
+    <div class="jstep"><div class="jn">PHASE 2</div><h5>Fabrication &amp; Testing</h5></div>
+    <div class="jstep"><div class="jn">DAYS 16–30</div><h5>Workshop + Track Testing</h5></div>
   </div>
-  <div class="modules">
-    <div class="mod"><div class="mod-num">01</div><div class="mod-title">Intro to ATVs</div></div>
-    <div class="mod"><div class="mod-num">02</div><div class="mod-title">Chassis Design</div></div>
-    <div class="mod"><div class="mod-num">03</div><div class="mod-title">Suspension Systems</div></div>
-    <div class="mod"><div class="mod-num">04</div><div class="mod-title">Steering &amp; Handling</div></div>
-    <div class="mod"><div class="mod-num">05</div><div class="mod-title">Braking Systems</div></div>
-    <div class="mod"><div class="mod-num">06</div><div class="mod-title">Powertrain &amp; Transmission</div></div>
-    <div class="mod"><div class="mod-num">07</div><div class="mod-title">Tires &amp; Wheels</div></div>
-    <div class="mod"><div class="mod-num">08</div><div class="mod-title">Electrical Systems</div></div>
-    <div class="mod"><div class="mod-num">09</div><div class="mod-title">Dynamic Analysis</div></div>
-    <div class="mod"><div class="mod-num">10</div><div class="mod-title">Fabrication Techniques</div></div>
-  </div>
+  <div class="journey-desc">This program provides a comprehensive understanding of the principles and techniques involved in designing, analyzing, simulating, and fabricating high-performance Baja Buggies. Phase 1 covers chassis design, suspension &amp; steering systems, powertrain dynamics, tire behavior, and design validation through simulation. Phase 2 moves into chassis manufacturing, component assembly, wiring, and culminates in track testing and performance evaluation.</div>
 
-  <!-- HIGHLIGHTS -->
-  <div class="section-header">
-    <div class="section-label">Why This Program</div>
-    <div class="section-line"></div>
-  </div>
-  <div class="highlights">
-    <div class="hl">
-      <div class="hl-icon">🔧</div>
-      <div class="hl-title">Real Workshop</div>
-      <div class="hl-text">Actual tools, machines &amp; materials. No simulation-only sessions.</div>
+  <div class="seclabel"><div class="num">03</div><div class="txt">What You'll Gain</div><div class="rule"></div></div>
+  <div class="overview-grid">
+    <div class="ocard">
+      <div class="ic">🎨</div>
+      <h4>Design Expertise</h4>
+      <p>Design & construct an ATV chassis considering materials, structural integrity & weight optimization.</p>
     </div>
-    <div class="hl">
-      <div class="hl-icon">🏁</div>
-      <div class="hl-title">Full Prototype</div>
-      <div class="hl-text">Build a complete, functional ATV from concept to testing.</div>
+    <div class="ocard">
+      <div class="ic">💻</div>
+      <h4>Simulation Skills</h4>
+      <p>Analyze and design suspension systems for optimal off-road performance.</p>
     </div>
-    <div class="hl">
-      <div class="hl-icon">📐</div>
-      <div class="hl-title">CAD + CAE</div>
-      <div class="hl-text">Industry-standard design and simulation tools covered.</div>
+    <div class="ocard">
+      <div class="ic">🔧</div>
+      <h4>Fabrication Skills</h4>
+      <p>Design steering systems for precise handling and optimize braking for safety.</p>
     </div>
-    <div class="hl">
-      <div class="hl-icon">🎓</div>
-      <div class="hl-title">Mentor-Led</div>
-      <div class="hl-text">Expert guidance throughout every phase of the build.</div>
+    <div class="ocard">
+      <div class="ic">⚙️</div>
+      <h4>Powertrain Skills</h4>
+      <p>Select powertrain components and optimize transmission for different ATV applications
+</p>
     </div>
-    <div class="hl">
-      <div class="hl-icon">🚘</div>
-      <div class="hl-title">Career-Ready</div>
-      <div class="hl-text">Industry skills for EV, auto design &amp; motorsport careers.</div>
+    <div class="ocard">
+      <div class="ic">🔌</div>
+      <h4>Electrical Skills</h4>
+      <p>Design and integrate electrical systems including wiring, lighting & battery management</p>
+    </div>
+    <div class="ocard">
+      <div class="ic">🔍</div>
+      <h4>Design Validation Skills</h4>
+      <p>Perform dynamic simulations, validate designs, and conduct real physical prototype testing</p>
     </div>
   </div>
 
-  <!-- CTA -->
-  <div class="cta-strip">
-    <div class="cta-left">
-      <div class="cta-title">Register Now — Seats Are Limited</div>
-      <div class="cta-sub">Scan or visit the link to secure your spot</div>
-    </div>
-    <div class="cta-right">
-      <div class="cta-url">pages.razorpay.com/bajabuggy2026</div>
-      <a class="cta-url-label" href="https://pages.razorpay.com/bajabuggy2026" target="_blank" rel="noopener noreferrer">Registration Portal</a>
-    </div>
+  <div class="seclabel"><div class="num">04</div><div class="txt">Training Modules</div><div class="rule"></div></div>
+  <div class="modgrid">
+    <div class="modcard"><div class="mnum">01</div><h5>Introduction to ATVs</h5>
+      <ul><li>History & evolution of ATVs</li><li>Types and applications</li><li>Safety considerations & regulations</li></ul></div>
+    <div class="modcard"><div class="mnum">02</div><h5>Chassis Design & Construction</h5>
+      <ul><li>Fundamentals of chassis design</li><li>Material selection & tubular frame construction</li><li>Integration of chassis subsystems</li></ul></div>
+    <div class="modcard"><div class="mnum">03</div><h5>Suspension System Design</h5>
+      <ul><li>Suspension types for off-road vehicles</li><li>Spring/damper selection & tuning</li><li>Impact of suspension geometry on dynamics</li></ul></div>
+    <div class="modcard"><div class="mnum">04</div><h5>Steering & Handling</h5>
+      <ul><li>Steering components & Ackerman principle</li><li>Handling characteristics of ATVs</li><li>Tuning steering response for performance</li></ul></div>
+    <div class="modcard"><div class="mnum">05</div><h5>Braking Systems</h5>
+      <ul><li>Disc & drum brake systems</li><li>Hydraulic braking system design</li><li>Brake force distribution & efficiency</li></ul></div>
+    <div class="modcard"><div class="mnum">06</div><h5>Powertrain & Transmission</h5>
+      <ul><li>Engine selection & considerations</li><li>Transmission options, gear ratios & drive systems</li><li>Power delivery & torque characteristics</li></ul></div>
+    <div class="modcard"><div class="mnum">07</div><h5>Tires & Wheels</h5>
+      <ul><li>Tire selection for off-road applications</li><li>Tread patterns, sizes & wheel design</li><li>Tire pressure & traction management</li></ul></div>
+    <div class="modcard"><div class="mnum">08</div><h5>Electrical Systems</h5>
+      <ul><li>Wiring & electrical system design</li><li>Lighting, auxiliary systems & battery management</li><li>Integration of electrical components</li></ul></div>
+    <div class="modcard"><div class="mnum">09</div><h5>Dynamic Analysis & Simulation</h5>
+      <ul><li>Modelling & simulation techniques for ATVs</li><li>Handling characteristics & stability analysis</li><li>Off-road terrain simulation & optimization</li></ul></div>
+    <div class="modcard"><div class="mnum">10</div><h5>Fabrication Techniques</h5>
+      <ul><li>Welding & machining of ATV components</li><li>Full subsystem integration & assembly</li><li>Physical testing, validation & customization</li></ul></div>
   </div>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    <div class="contact-block">
-      <div class="contact-item">
-        <span class="contact-icon">📧</span>
-        <span><strong>achillesracingclubindia@gmail.com</strong></span>
-      </div>
-      <div class="contact-item">
-        <span class="contact-icon">📞</span>
-        <span><strong>+91 8800219630</strong></span>
-      </div>
-      <div class="contact-item">
-        <span class="contact-icon">🌐</span>
-        <span><strong>pages.razorpay.com/bajabuggy2026</strong></span>
-      </div>
-    </div>
-    <div class="copyright">© 2026 Achilles Racing Club India &nbsp;|&nbsp; All Rights Reserved</div>
+  <div class="seclabel"><div class="num">05</div><div class="txt">WHO SHOULD APPLY?</div><div class="rule"></div></div>
+  <div class="applygrid">
+    <div class="applycard"><div class="ic">❤️</div><div><h6>Genuine Interest</h6><p>Passion and curiosity for off-road vehicles, ATV engineering, and motorsport.</p></div></div>
+    <div class="applycard"><div class="ic">🎓</div><div><h6>Career Focus</h6><p>Actively pursuing a career in automotive, motorsports or a related domain.</p></div></div>
+    <div class="applycard"><div class="ic">📚</div><div><h6>Basic Knowledge</h6><p>Foundational understanding of engineering concepts — no prior experience required.</p></div></div>
+    <div class="applycard"><div class="ic">⏰</div><div><h6>FullCommitment</h6><p>Attend all 30 days and actively engage in every design and workshop session.</p></div></div>
+    <div class="applycard"><div class="ic">💬</div><div><h6>Communication</h6><p>Sufficient proficiency in the language of instruction for class participation.</p></div></div>
+    <div class="applycard"><div class="ic">💻</div><div><h6>Technical Access</h6><p>Computer with stable internet for course materials and virtual activities.</p></div></div>
+  </div>
+
+  <div class="seclabel"><div class="num">06</div><div class="txt">Important Note</div><div class="rule"></div></div>
+  <div class="termslist">
+    <div class="termitem"><div class="ic">💳</div><div class="t"><b>Non-Refundable Program</b>This is a non-refundable program once enrollment is confirmed.</div></div>
+    <div class="termitem"><div class="ic">📝</div><div class="t"><b>Curriculum Flexibility</b>Curriculum may be adjusted based on available resources and program objectives.</div></div>
+  </div>
+
+  <div class="finalcta">
+    <h2>Ready to Build Your<br>Own Buggy?</h2>
+    <p>Enroll now and secure your seat in this 30-day intensive program.</p>
+    <a class="btn-light" href="https://pages.razorpay.com/bajabuggy2026" target="_blank" rel="noopener">Register Now →</a>
   </div>
 
 </div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="logowrap">
+      <img src="./ARC_LOGO.jpeg" alt="ARC Global">
+      <div class="div"></div>
+      <div class="tagline">We don't simply manufacture vehicles. We build engineers.</div>
+    </div>
+    <div class="contacts">
+      <div class="contact-item"><div class="l">Email</div><div class="v">achillesracingclubindia@gmail.com</div></div>
+      <div class="contact-item"><div class="l">Call</div><div class="v redv">+91 88002 19630</div></div>
+      <div class="contact-item"><div class="l">Web</div><div class="v">pages.razorpay.com/bajabuggy2026</div></div>
+    </div>
+  </div>
+  <div class="copyright">© ARC Global — All Rights Reserved</div>
+</div>
+
+<div class="sticky-cta">
+  <div class="info">
+    <div class="l">Buggy Building Workshop · 30 Days</div>
+    <div class="d">achillesracingclubindia@gmail.com · +91 88002 19630</div>
+  </div>
+  <a class="btn" href="https://pages.razorpay.com/bajabuggy2026" target="_blank" rel="noopener">Register Now →</a>
+</div>
+
 </body>
 </html>
