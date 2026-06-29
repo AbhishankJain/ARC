@@ -657,7 +657,21 @@ section {
     min-height: auto;
   }
 }
+#instagram-visual {
+  display: block;
+  width: 100%;
+  overflow: hidden; 
+  border-radius: 8px; 
+}
 
+/* 2. Force the Instagram iframe to fit 100% of the wrapper */
+#instagram-visual iframe.instagram-media,
+.instagram-media {
+  min-width: 100% !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
 /* ===== ABOUT ===== */
 #about {
   background: var(--dark);
