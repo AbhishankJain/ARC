@@ -1976,28 +1976,41 @@ footer {
         <textarea id="message" placeholder="Tell us about your project or inquiry..." required></textarea>
       </div>
       <button type="submit" class="btn-primary" style="align-self:flex-start;border:none;cursor:pointer">Send Message →</button>
-      <p id="formStatus" style="margin-top:12px;font-size:14px;color:#25D366;display:none;">✓ Message sent successfully!</p>
+      <p id="formStatus" style="margin-top:12px;font-size:14px;color:#25D366;display:none;">✓ Opening email client...</p>
     </form>
 
     <script>
       document.getElementById('contactForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
         
-        const mailtoLink = `mailto:achillesracingclubindia@gmail.com?subject=${encodeURIComponent(subject)} - From: ${encodeURIComponent(name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`)}`;
+        if (!name || !email || !subject || !message) {
+          alert('Please fill in all fields');
+          return;
+        }
         
-        window.location.href = mailtoLink;
+        const emailSubject = `${subject} - From: ${name}`;
+        const emailBody = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`;
+        
+        const mailtoLink = `mailto:achillesracingclubindia@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
         
         document.getElementById('formStatus').style.display = 'block';
+        
+        // Use setTimeout to ensure status message displays before redirect
         setTimeout(() => {
-          document.getElementById('contactForm').reset();
-          document.getElementById('formStatus').style.display = 'none';
-        }, 2000);
+          window.location.href = mailtoLink;
+          // Reset form after a delay
+          setTimeout(() => {
+            document.getElementById('contactForm').reset();
+            document.getElementById('formStatus').style.display = 'none';
+          }, 500);
+        }, 300);
       });
+    </script>
     </script>
   </div>
 </section>
