@@ -1949,20 +1949,20 @@ footer {
       </div>
     </div>
 
-    <form class="contact-form fade-up" method="POST" action="https://formsubmit.co/achillesracingclubindia@gmail.com">
+    <form class="contact-form fade-up" id="contactForm">
       <div class="form-row">
         <div class="form-field">
           <label>Your Name</label>
-          <input type="text" name="name" placeholder="Full name" required>
+          <input type="text" id="name" placeholder="Full name" required>
         </div>
         <div class="form-field">
           <label>Email</label>
-          <input type="email" name="email" placeholder="your@email.com" required>
+          <input type="email" id="email" placeholder="your@email.com" required>
         </div>
       </div>
       <div class="form-field">
         <label>Subject</label>
-        <select name="subject" required>
+        <select id="subject" required>
           <option value="">Select a subject</option>
           <option value="Vehicle Development Inquiry">Vehicle Development Inquiry</option>
           <option value="Engineering Consulting">Engineering Consulting</option>
@@ -1973,12 +1973,32 @@ footer {
       </div>
       <div class="form-field">
         <label>Message</label>
-        <textarea name="message" placeholder="Tell us about your project or inquiry..." required></textarea>
+        <textarea id="message" placeholder="Tell us about your project or inquiry..." required></textarea>
       </div>
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://achillesracingclub.com/">
       <button type="submit" class="btn-primary" style="align-self:flex-start;border:none;cursor:pointer">Send Message →</button>
+      <p id="formStatus" style="margin-top:12px;font-size:14px;color:#25D366;display:none;">✓ Message sent successfully!</p>
     </form>
+
+    <script>
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        
+        const mailtoLink = `mailto:achillesracingclubindia@gmail.com?subject=${encodeURIComponent(subject)} - From: ${encodeURIComponent(name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`)}`;
+        
+        window.location.href = mailtoLink;
+        
+        document.getElementById('formStatus').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('contactForm').reset();
+          document.getElementById('formStatus').style.display = 'none';
+        }, 2000);
+      });
+    </script>
   </div>
 </section>
 
