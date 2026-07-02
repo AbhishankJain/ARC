@@ -16,14 +16,16 @@
     align-items: flex-start;
     font-family: 'Barlow', 'Arial', sans-serif;
     padding: 40px 20px;
+    margin-bottom: 10%;
   }
 
   .poster {
-    width: 900px;
+    width: min(100%, 900px);
     background: #0d0d0d;
     position: relative;
     overflow: hidden;
-    color: #fff;
+    color: #beb6b6;
+    margin-bottom: 35%;
   }
 
   /* ── TOP BAR ── */
@@ -632,6 +634,184 @@
   .corner-tl { top: 10px; left: 10px; border-top: 2px solid #E5331D; border-left: 2px solid #E5331D; }
   .corner-br { bottom: 10px; right: 10px; border-bottom: 2px solid #E5331D; border-right: 2px solid #E5331D; }
 
+  @media (max-width: 900px) {
+    body {
+      padding: 20px 12px;
+    }
+    .poster {
+      width: 100%;
+    }
+    .topbar {
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px 18px;
+    }
+    .hero {
+      padding: 22px 18px 0;
+    }
+    .hero-slash {
+      width: 520px;
+      top: -18px;
+      right: -40px;
+    }
+    .hero-tag-row {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .hero-title {
+      font-size: clamp(42px, 10vw, 88px);
+      line-height: 0.95;
+      letter-spacing: -1px;
+    }
+    .hero-year {
+      font-size: clamp(40px, 8vw, 72px);
+      padding: 0 10px;
+    }
+    .hero-sub {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .reg-banner,
+    .giveaway-banner,
+    .footer,
+    .prize-callout {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+    .reg-banner,
+    .giveaway-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .reg-right,
+    .gb-right {
+      width: 100%;
+      text-align: left;
+    }
+    .prize-callout-inner {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .prize-callout-dividers {
+      justify-content: stretch;
+      flex-wrap: wrap;
+    }
+    .pc-item {
+      min-width: 0;
+      width: 100%;
+    }
+    .prize-row,
+    .content-row,
+    .phases-grid,
+    .perks-row {
+      grid-template-columns: 1fr;
+    }
+    .special-row {
+      justify-content: flex-start;
+    }
+    .footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .footer-logo-area {
+      justify-content: space-between;
+      width: 100%;
+    }
+    .footer-divider {
+      display: none;
+    }
+    .footer-contacts {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .ticker {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 18px;
+    }
+    .gb-desc {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .topbar-left,
+    .status-badge,
+    .hero-tag,
+    .hero-badge,
+    .reg-free-tag,
+    .reg-title,
+    .reg-closes-label,
+    .reg-closes-date,
+    .section-label,
+    .prize-callout-eyebrow,
+    .prize-callout-main,
+    .prize-callout-label,
+    .pc-item-label,
+    .pc-item-val,
+    .prize-pos,
+    .prize-amount,
+    .content-type,
+    .content-name,
+    .content-desc,
+    .phase-tag,
+    .phase-name,
+    .phase-date,
+    .phase-desc,
+    .perk-title,
+    .perk-desc,
+    .gb-eyebrow,
+    .gb-title,
+    .gb-amount,
+    .gb-amount-label,
+    .footer-tagline,
+    .fc-label,
+    .fc-val,
+    .ticker-left,
+    .ticker-right {
+      font-size: clamp(10px, 2vw, 16px);
+    }
+    .hero-year-row {
+      justify-content: flex-start;
+    }
+    .reg-banner,
+    .giveaway-banner,
+    .footer,
+    .prize-callout {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+    .hero-title {
+      font-size: 46px;
+      letter-spacing: -1px;
+    }
+    .hero-year {
+      font-size: 46px;
+    }
+    .hero-sub {
+      font-size: 13px;
+    }
+    .phase-letter {
+      font-size: 32px;
+    }
+    .gb-amount {
+      font-size: 32px;
+    }
+    .prize-callout-main {
+      font-size: 40px;
+    }
+    .pc-item {
+      padding: 12px 14px;
+    }
+    .content-card,
+    .phase-card,
+    .perk-card,
+    .prize-card {
+      padding: 14px 16px;
+    }
+  }
 </style>
 </head>
 <body>
